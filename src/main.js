@@ -100,23 +100,33 @@ function sincronizar() {
   });
 }
 
-ipcMain.handle("crm:listar", () => lista());
-ipcMain.handle("crm:salvar", (_e, id, patch) => enfileirar(async () => {
+// Só a tela local do app (file://.../src/index.html) pode chamar o disco.
+const TELA = join(AQUI, "index.html");
+function daTela(e) {
+  try { return fileURLToPath(e.senderFrame.url) === TELA; } catch { return false; }
+}
+const seguro = (nome, fn) => ipcMain.handle(nome, (e, ...args) => {
+  if (!daTela(e)) throw new Error("chamada recusada");
+  return fn(e, ...args);
+});
+
+seguro("crm:listar", () => lista());
+seguro("crm:salvar", (_e, id, patch) => enfileirar(async () => {
   if (!leads[id] || typeof patch !== "object") return;
   leads = { ...leads, [id]: { ...leads[id], ...patch } };
   await salvarLeads();
 }));
-ipcMain.handle("crm:criar", (_e, id, doc) => enfileirar(async () => {
+seguro("crm:criar", (_e, id, doc) => enfileirar(async () => {
   if (typeof id !== "string" || !id || leads[id]) return;
   leads = { ...leads, [id]: doc };
   await salvarLeads();
 }));
-ipcMain.handle("crm:excluir", (_e, id) => enfileirar(async () => {
+seguro("crm:excluir", (_e, id) => enfileirar(async () => {
   const { [id]: _fora, ...resto } = leads;
   leads = resto;
   await salvarLeads();
 }));
-ipcMain.handle("crm:abrir", (_e, url) => {
+seguro("crm:abrir", (_e, url) => {
   if (/^https:\/\/(wa\.me|www\.google\.com\/maps)\//.test(String(url))) return shell.openExternal(url);
 });
 
@@ -134,6 +144,8 @@ async function iniciar() {
   });
   janela.maximize();
   janela.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
+  janela.webContents.on("will-navigate", (e) => e.preventDefault()); // a janela nunca sai do index.html
+  janela.webContents.on("will-redirect", (e) => e.preventDefault());
   await janela.loadFile(join(AQUI, "index.html"));
   sincronizar();
   watchFile(caminho.eventos(), { interval: INTERVALO_MS }, () => sincronizar());
