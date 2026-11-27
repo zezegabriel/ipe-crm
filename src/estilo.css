@@ -26,7 +26,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .side>*{-webkit-app-region:no-drag}
 .brand{display:flex;align-items:center;gap:9px;padding:4px 8px;font-weight:600;font-size:14px;-webkit-app-region:drag}
 .brand{justify-content:center;padding:4px 0 0}
-.logo{width:132px;height:auto;border-radius:12px;display:block}
+.logo{width:132px;height:auto;display:block}
 .nav{display:flex;flex-direction:column;gap:1px}
 .nav .grp{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--muted);padding:14px 8px 5px;font-weight:500}
 .nav .grp .ic{width:13px;height:13px}
