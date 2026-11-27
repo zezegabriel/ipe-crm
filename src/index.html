@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:">
+<title>Ipê CRM</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="logo">I</span><span>Ipê CRM</span></div>
+    <nav class="nav" id="stats" aria-label="Filtros"></nav>
+    <p class="live" id="live"></p>
+  </aside>
+
+  <div class="content">
+    <header class="top">
+      <div class="top-l">
+        <h1>Leads</h1>
+        <div class="tabs" role="group" aria-label="Modo de visualização">
+          <button type="button" id="v-funil" aria-pressed="true" data-ic="kanban">Funil</button>
+          <button type="button" id="v-lista" aria-pressed="false" data-ic="list">Lista</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="new-btn" type="button" data-ic="plus">Novo lead</button>
+    </header>
+
+    <div class="toolbar">
+      <label class="search-w" data-ic="search"><input class="search" id="q" type="search" placeholder="Buscar" aria-label="Buscar empresa, bairro, telefone ou anotação"></label>
+      <select id="f-nicho" aria-label="Filtrar por nicho"></select>
+      <select id="f-prio-filter" aria-label="Filtrar por prioridade">
+        <option value="">Qualquer prioridade</option>
+        <option>Alta</option><option>Média</option><option>Baixa</option>
+      </select>
+    </div>
+
+    <div class="banner" id="banner" hidden></div>
+    <main id="main"></main>
+  </div>
+</div>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="scrim" data-close></div>
+  <section class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title"></section>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+<script src="tela.js"></script>
+</body>
+</html>

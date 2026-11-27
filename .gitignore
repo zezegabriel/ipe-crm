@@ -1,0 +1,7 @@
+node_modules/
+dist/
+# Dados de leads nunca vão para o repositório
+dados/
+*.jsonl
+leads.json
+cursor.txt
