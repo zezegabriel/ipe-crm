@@ -3,7 +3,8 @@ const STAGES=[["a_contatar","A contatar"],["contatado","Contatado"],["respondeu"
 const STAGE_NAME=Object.fromEntries(STAGES);
 const STAGE_IDX=Object.fromEntries(STAGES.map((s,i)=>[s[0],i]));
 // Etiqueta de cada etapa: [cor do texto, fundo]
-const STAGE_TAG={a_contatar:["#B4B7BE","rgba(180,183,190,.12)"],contatado:["#7DA8FF","rgba(77,138,255,.16)"],respondeu:["#B79CFF","rgba(150,110,255,.16)"],reuniao:["#FFA463","rgba(255,140,60,.15)"],proposta:["#F5C451","rgba(245,190,60,.15)"],fechado:["#5FD48F","rgba(60,200,120,.15)"],perdido:["#FF7B7B","rgba(255,90,90,.14)"]};
+// Cores da identidade visual: azul #2A367E, roxo #5A2D82, laranja #FF6B00, amarelo #FFB800 (texto clareado para ler no escuro).
+const STAGE_TAG={a_contatar:["#BDB7A6","rgba(253,246,226,.08)"],contatado:["#8E9BF0","rgba(42,54,126,.45)"],respondeu:["#C59BEB","rgba(90,45,130,.45)"],reuniao:["#FF8A3D","rgba(255,107,0,.16)"],proposta:["#FFB800","rgba(255,184,0,.15)"],fechado:["#5FD48F","rgba(60,200,120,.15)"],perdido:["#FF7B7B","rgba(255,90,90,.14)"]};
 // Ícones Lucide (MIT), embutidos para funcionar offline.
 const ICONES={
   users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',

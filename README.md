@@ -1,5 +1,7 @@
 # Ipê CRM
 
+![Ipê CRM](build/logo-completo.jpg)
+
 CRM de desktop para Windows para quem prospecta pelo WhatsApp com um bot. Cada mensagem que o bot manda ou recebe aparece no funil em até 2 segundos, sem planilha e sem digitar nada.
 
 ## Como funciona
