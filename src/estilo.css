@@ -104,7 +104,7 @@ main{flex:1;min-height:0;overflow:auto}
 .state strong{color:var(--ink)}
 
 .tag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;border-radius:5px;padding:1px 7px;background:var(--tb);color:var(--tc);white-space:nowrap}
-.tag i{width:6px;height:6px;border-radius:2px;background:var(--tc)}
+.tag .ic,.stages button .ic{width:13px;height:13px;color:var(--tc)}
 
 table{border-collapse:collapse;width:100%;min-width:960px}
 th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line-2);vertical-align:middle}

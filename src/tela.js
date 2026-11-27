@@ -29,12 +29,18 @@ const ICONES={
   layers:'<path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>',
   money:'<path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
   globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20 15.3 15.3 0 0 1 0-20"/>',
+  dashed:'<path d="M10.1 2.18a9.93 9.93 0 0 1 3.8 0"/><path d="M17.6 3.71a9.95 9.95 0 0 1 2.69 2.7"/><path d="M21.82 10.1a9.93 9.93 0 0 1 0 3.8"/><path d="M20.29 17.6a9.95 9.95 0 0 1-2.7 2.69"/><path d="M13.9 21.82a9.94 9.94 0 0 1-3.8 0"/><path d="M6.4 20.29a9.95 9.95 0 0 1-2.69-2.7"/><path d="M2.18 13.9a9.93 9.93 0 0 1 0-3.8"/><path d="M3.71 6.4a9.95 9.95 0 0 1 2.7-2.69"/>',
+  send:'<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  check:'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+  xcircle:'<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
   bulb:'<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
 };
 function ic(n){return `<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONES[n]||""}</svg>`;}
 const AV_CORES=["#E5484D","#F76B15","#FFB224","#30A46C","#12A594","#0090FF","#3E63DD","#8E4EC6","#D6409F","#6F6D66"];
 function tagVars(k){const [c,b]=STAGE_TAG[k]||STAGE_TAG.a_contatar;return `--tc:${c};--tb:${b}`;}
-function tag(k){return `<span class="tag" style="${tagVars(k)}"><i></i>${esc(STAGE_NAME[k]||"A contatar")}</span>`;}
+const STAGE_IC={a_contatar:"dashed",contatado:"send",respondeu:"msg",reuniao:"cal",proposta:"note",fechado:"check",perdido:"xcircle"};
+const stageIc=k=>ic(STAGE_IC[k]||"dashed");
+function tag(k){return `<span class="tag" style="${tagVars(k)}">${stageIc(k)}${esc(STAGE_NAME[k]||"A contatar")}</span>`;}
 function avatar(nome){const n=String(nome||"?");let h=0;for(const ch of n)h=(h*31+ch.charCodeAt(0))>>>0;
   const letra=(n.match(/[A-Za-zÀ-ú0-9]/)||["?"])[0].toUpperCase();return `<span class="av" style="--av:${AV_CORES[h%AV_CORES.length]}">${esc(letra)}</span>`;}
 const OPEN_STAGES=["contatado","respondeu","reuniao","proposta"];
@@ -112,7 +118,7 @@ function renderStats(){
     item("retorno",ic("clock")+"Retornos pendentes",ret,ret?"red":"")+
     item("conversa",ic("chats")+"Em conversa",leads.filter(l=>OPEN_STAGES.includes(l.etapa)).length)+
     `<div class="grp">${ic("layers")}Etapas</div>`+
-    STAGES.map(([k,n])=>item("etapa:"+k,`<span class="tag" style="${tagVars(k)}"><i></i>${n}</span>`,leads.filter(l=>(l.etapa||"a_contatar")===k).length)).join("");
+    STAGES.map(([k])=>item("etapa:"+k,tag(k),leads.filter(l=>(l.etapa||"a_contatar")===k).length)).join("");
 }
 
 function renderNichoFilter(){
@@ -244,7 +250,7 @@ function refreshSheet(){
   const l=leads.find(x=>x.id===ui.openId);
   if(!l){closeSheet();return;}
   const st=$("#sh-stages"); if(!st) return;
-  st.innerHTML=STAGES.map(([k,n])=>`<button type="button" data-stage="${k}" aria-pressed="${l.etapa===k}" style="${tagVars(k)}"><i></i>${n}</button>`).join("");
+  st.innerHTML=STAGES.map(([k,n])=>`<button type="button" data-stage="${k}" aria-pressed="${l.etapa===k}" style="${tagVars(k)}">${stageIc(k)}${n}</button>`).join("");
   const act=document.activeElement;
   const setIf=(id,v)=>{const el=$(id);if(el&&el!==act&&String(el.value)!==String(v))el.value=v;};
   setIf("#f-prio",l.prioridade||"Média");
